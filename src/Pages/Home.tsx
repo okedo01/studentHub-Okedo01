@@ -1,3 +1,4 @@
+import Cards from '@/Cards'
 import React from 'react'
 
 const Home: React.FC = () => {
@@ -6,6 +7,9 @@ const Home: React.FC = () => {
       <header>
         <h1>Courses</h1>
       </header>
+      <main>
+        <Cards />
+      </main>
     </div>
   )
 }
