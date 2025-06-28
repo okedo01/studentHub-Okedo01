@@ -8,9 +8,9 @@ import {
 
 const Navbar: React.FC = () => {
     return (
-        <div className="bg-amber-300 flex justify-between items-center px-4">
+        <div className="bg-blue-300 flex justify-between items-center px-4">
             <header>
-                <h1>StudentHub</h1>
+                <img src="/studentHub.png" alt="studentHub" className="w-3xs rounded-full"/>
             </header>
             <NavigationMenu>
                 <NavigationMenuList>

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
     Card,
-    CardAction,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -34,19 +32,34 @@ const Cards: React.FC = () => {
             })
     }, [])
 
+    if(isLoading) return (
+        <div className="loading">
+            <div className="spinner">
+
+            </div>
+        </div>
+    )
+    if(error) return (
+        <div className="error">
+            { error }
+        </div>
+    )
+
+    if(!courses) return null;
+
     return (
-        <div>
-            {courses.map((_, course) => (
-                <Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-5">
+            {courses.map((course) => (
+                <Card key={course.id} >
                     <CardHeader>
-                        <CardTitle>Introduction to Python</CardTitle>
+                        <CardTitle className="text-2xl">{ course.title }</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p>Learn the basics of Python Programming</p>
+                        <p className="text">{ course.description }</p>
                     </CardContent>
-                    <CardFooter>
-                        <span>8 weeks</span>
-                        <Button>Register</Button>
+                    <CardFooter className="flex justify-between">
+                        <span>{ course.duration }</span>
+                        <Button variant="outline">Register</Button>
                     </CardFooter>
                 </Card>
             ))}

@@ -5,7 +5,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <header>
-        <h1>Courses</h1>
+        <h1 className="text-5xl text-start pb-5">Courses</h1>
       </header>
       <main>
         <Cards />
