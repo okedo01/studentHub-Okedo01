@@ -2,7 +2,11 @@ import React from 'react'
 
 const Home: React.FC = () => {
   return (
-    <div>Home</div>
+    <div>
+      <header>
+        <h1>Courses</h1>
+      </header>
+    </div>
   )
 }
 
