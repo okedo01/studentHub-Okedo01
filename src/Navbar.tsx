@@ -15,16 +15,16 @@ const Navbar: React.FC = () => {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/">Home</NavigationMenuLink>
+                            <NavigationMenuLink href="/" className="text-3xl">Home</NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/about">About</NavigationMenuLink>
+                            <NavigationMenuLink href="/about" className="text-3xl">About</NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/contact">Contact Us</NavigationMenuLink>
+                            <NavigationMenuLink href="/contact" className="text-3xl">Contact Us</NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/course">Courses</NavigationMenuLink>
+                            <NavigationMenuLink href="/course" className="text-3xl">Courses</NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
