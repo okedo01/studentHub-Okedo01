@@ -1,13 +1,12 @@
 import './App.css'
-import { Button } from './components/ui/button'
+import Navbar from './Navbar'
 
 function App() {
 
   return (
-    <>
-      <Button className="text-red-400" variant={'secondary'}>Click Me</Button>
-      <h1 className='bg-red-300 text-2xl text-yellow-400'>Hello World!</h1>
-    </>
+    <div>
+      <Navbar />
+    </div>
   )
 }
 
