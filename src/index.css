@@ -7,6 +7,7 @@
   --primary: #5927E5;
   --secondary: #B2CAD5;
   --tertiary: #2e6577;
+  --error: #700202;
 }
 
 .nav {
@@ -32,7 +33,7 @@ button:focus-visible {
 }
 
 .error {
-  color: red;
+  color: var(--error);
 }
 
 form {
@@ -44,12 +45,14 @@ form input {
   padding: 10px 20px;
   border: 1px solid gray;
   border-radius: 5px;
+  background-color: #B2CAD5;
   outline: none;
 }
 form button {
-  margin-top: 10px;
-  background-color: #6a6a6a;
-  color: white;
+  margin-top: 20px;
+  padding: 10px 0;
+  background-color: var(--tertiary);
+  color: var(--secondary);
 }
 form button:hover {
   background-color: #808080;
