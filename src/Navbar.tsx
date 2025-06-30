@@ -8,23 +8,23 @@ import {
 
 const Navbar: React.FC = () => {
     return (
-        <div className="bg-blue-300 flex justify-between items-center px-4">
+        <div className="flex justify-between items-center px-4">
             <header>
-                <img src="/studentHub.png" alt="studentHub" className="w-3xs rounded-full"/>
+                <img src="/studentHub.png" alt="studentHub" className="w-24 h-24 rounded-full"/>
             </header>
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/" className="text-3xl">Home</NavigationMenuLink>
+                            <NavigationMenuLink href="/" className="text-2xl">Home</NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/about" className="text-3xl">About</NavigationMenuLink>
+                            <NavigationMenuLink href="/about" className="text-2xl">About</NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/contact" className="text-3xl">Contact Us</NavigationMenuLink>
+                            <NavigationMenuLink href="/contact" className="text-2xl">Contact Us</NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/course" className="text-3xl">Courses</NavigationMenuLink>
+                            <NavigationMenuLink href="/course" className="text-2xl">Courses</NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
