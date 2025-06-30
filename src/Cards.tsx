@@ -60,8 +60,10 @@ const Cards: React.FC = () => {
                     </CardContent>
                     <CardFooter className="flex justify-between">
                         <span className="text-blue-900">{ course.duration }</span>
-                        <Link to="/register">
-                            <Button variant="outline" className="cursor-pointer">Register</Button>
+                        <Link to={`/courses/${course.id}`}>
+                            <Button variant="outline" className="cursor-pointer">
+                                Register
+                            </Button>
                         </Link>
                     </CardFooter>
                 </Card>
