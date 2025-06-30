@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import type { Courses } from './Types'
+import Swal from 'sweetalert2'
 
 type formData = {
     email: string
@@ -10,7 +11,7 @@ type formData = {
 }
 
 const Register: React.FC = () => {
-    const [ courses, setCourses ] = useState<Courses | null>(null);
+    const [courses, setCourses] = useState<Courses | null>(null);
 
     const { id } = useParams();
     const courseID = Number(id);
@@ -18,7 +19,7 @@ const Register: React.FC = () => {
     useEffect(() => {
         fetch("/data.json")
             .then(resource => {
-                if(!resource.ok) {
+                if (!resource.ok) {
                     throw new Error("Failed to fetch data");
                 }
                 return resource.json();
@@ -39,7 +40,12 @@ const Register: React.FC = () => {
 
     const onSubmit = async (data: formData) => {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        alert(`You have been registered for ${courses?.title}`);
+        Swal.fire({
+            title: '🎉 Congratulations!',
+            text: `You have been successfully enrolled for ${courses?.title} course`,
+            icon: 'success',
+            confirmButtonText: 'Awesome 🚀',
+        });
         reset();
     }
 
