@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
+import type { Courses } from './Types'
 
 type formData = {
     email: string
@@ -9,8 +10,25 @@ type formData = {
 }
 
 const Register: React.FC = () => {
+    const [ courses, setCourses ] = useState<Courses | null>(null);
+
     const { id } = useParams();
-    const formID = Number(id);
+    const courseID = Number(id);
+
+    useEffect(() => {
+        fetch("/data.json")
+            .then(resource => {
+                if(!resource.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+                return resource.json();
+            })
+            .then((data: Courses[]) => {
+                const foundCourse = data.find(course => course.id === courseID);
+                setCourses(foundCourse || null);
+            })
+    })
+
     const {
         register,
         handleSubmit,
@@ -27,7 +45,7 @@ const Register: React.FC = () => {
 
     return (
         <div>
-            <h1>Register for course ID: {formID}</h1>
+            <h1>Register for course ID: {}</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <input {
                     ...register("email", {
