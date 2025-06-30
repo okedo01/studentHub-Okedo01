@@ -39,13 +39,13 @@ const Register: React.FC = () => {
 
     const onSubmit = async (data: formData) => {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        alert("You have been registered");
+        alert(`You have been registered for ${courses?.title}`);
         reset();
     }
 
     return (
         <div>
-            <h1>Register for course ID: {}</h1>
+            <h1>Register For {courses?.title}</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <input {
                     ...register("email", {
