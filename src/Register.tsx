@@ -1,6 +1,13 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './components/ui/form';
+import {
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
+} from './components/ui/form';
 import { useParams } from 'react-router-dom';
 
 type formData = {
@@ -22,15 +29,18 @@ const Register: React.FC = () => {
                 name="username"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>{id}</FormLabel>
                         <FormControl>
                             <input placeholder="shadcn" {...field} />
                         </FormControl>
-                        <FormDescription>This is your public display name.</FormDescription>
+                        <FormDescription>This is your public display name.{id}</FormDescription>
                         <FormMessage />
                     </FormItem>
                 )}
             /> */}
+
+            <input type="text" placeholder="First Name" />
+            <input type="text" placeholder="Last Name" />
         </div>
     )
 }
