@@ -3,6 +3,21 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.nav {
+  background-color: #B2CAD5;
+}
+
+.cards {
+  background-color: #B2CAD5;
+}
+
+button {
+  color: #2e6577;
+}
+button:hover {
+  background-color: #457c8e;
+}
+
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

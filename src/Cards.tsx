@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card"
 import type { Courses } from './Types'
 import { Button } from './components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Cards: React.FC = () => {
     const [courses, setCourses] = useState<Courses[]>([]);
@@ -50,7 +51,7 @@ const Cards: React.FC = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-5">
             {courses.map((course) => (
-                <Card key={course.id} >
+                <Card key={course.id} className="cards">
                     <CardHeader>
                         <CardTitle className="text-2xl">{ course.title }</CardTitle>
                     </CardHeader>
@@ -59,7 +60,9 @@ const Cards: React.FC = () => {
                     </CardContent>
                     <CardFooter className="flex justify-between">
                         <span>{ course.duration }</span>
-                        <Button variant="outline">Register</Button>
+                        <Link to="/register">
+                            <Button variant="outline" className="cursor-pointer">Register</Button>
+                        </Link>
                     </CardFooter>
                 </Card>
             ))}

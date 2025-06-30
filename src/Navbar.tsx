@@ -5,12 +5,15 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
 } from "@/components/ui/navigation-menu"
+import { Link } from 'react-router-dom'
 
 const Navbar: React.FC = () => {
     return (
-        <div className="flex justify-between items-center px-4">
+        <div className="flex justify-between items-center p-4 mb-8 nav">
             <header>
-                <img src="/studentHub.png" alt="studentHub" className="w-24 h-24 rounded-full"/>
+                <Link to="/">
+                    <img src="/studentHub.png" alt="studentHub" className="w-24 h-24 rounded-full cursor-pointer"/>
+                </Link>
             </header>
             <NavigationMenu>
                 <NavigationMenuList>
@@ -24,7 +27,7 @@ const Navbar: React.FC = () => {
                             <NavigationMenuLink href="/contact" className="text-2xl">Contact Us</NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/course" className="text-2xl">Courses</NavigationMenuLink>
+                            <NavigationMenuLink href="/courses" className="text-2xl">Courses</NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
