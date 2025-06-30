@@ -10,7 +10,7 @@ import { Button } from './components/ui/button'
 
 const Navbar: React.FC = () => {
     return (
-        <div className="flex justify-between items-center p-4 mb-8 nav">
+        <div className="flex justify-between items-center px-4 py-1 mb-8 nav">
             <header>
                 <Link to="/">
                     <img src="/studentHub.png" alt="studentHub" className="w-24 h-24 rounded-full cursor-pointer"/>
