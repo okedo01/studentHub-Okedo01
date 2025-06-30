@@ -6,6 +6,7 @@ import {
     NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { Link } from 'react-router-dom'
+import { Button } from './components/ui/button'
 
 const Navbar: React.FC = () => {
     return (
@@ -18,16 +19,24 @@ const Navbar: React.FC = () => {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/" className="text-2xl">Home</NavigationMenuLink>
+                            <NavigationMenuLink href="/" className="text-2xl">
+                                <Button>Home</Button>
+                            </NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/about" className="text-2xl">About</NavigationMenuLink>
+                            <NavigationMenuLink href="/about" className="text-2xl">
+                                <Button>About</Button>
+                            </NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/contact" className="text-2xl">Contact Us</NavigationMenuLink>
+                            <NavigationMenuLink href="/contact" className="text-2xl">
+                                <Button>Contact Us</Button>
+                            </NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                            <NavigationMenuLink href="/courses" className="text-2xl">Courses</NavigationMenuLink>
+                            <NavigationMenuLink href="/courses" className="text-2xl">
+                                <Button>Courses</Button>
+                            </NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>

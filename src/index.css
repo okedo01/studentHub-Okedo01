@@ -3,16 +3,24 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  --primary: #5927E5;
+  --secondary: #B2CAD5;
+  --tertiary: #2e6577;
+}
+
 .nav {
-  background-color: #B2CAD5;
+  background-color: var(--secondary);
 }
 
 .cards {
-  background-color: #B2CAD5;
+  background-color: var(--secondary);
+  box-shadow: -18px -12px 13px -6px rgba(0,0,0,0.1);
+  border: none;
 }
 
 button {
-  color: #2e6577;
+  color: var(--tertiary);
 }
 button:hover {
   background-color: #457c8e;

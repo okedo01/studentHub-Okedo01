@@ -53,13 +53,13 @@ const Cards: React.FC = () => {
             {courses.map((course) => (
                 <Card key={course.id} className="cards">
                     <CardHeader>
-                        <CardTitle className="text-2xl">{ course.title }</CardTitle>
+                        <CardTitle className="text-2xl text-blue-950">{ course.title }</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text">{ course.description }</p>
+                        <p className="text-blue-900">{ course.description }</p>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                        <span>{ course.duration }</span>
+                        <span className="text-blue-900">{ course.duration }</span>
                         <Link to="/register">
                             <Button variant="outline" className="cursor-pointer">Register</Button>
                         </Link>
