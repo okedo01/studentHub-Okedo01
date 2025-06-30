@@ -2,11 +2,11 @@ import Home from './Pages/Home'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import About from './Pages/About'
-import { Contact } from 'lucide-react'
 import Cards from './Cards'
 import Register from './Register'
 import NotFound from './NotFound'
 import HubLayout from './HubLayout'
+import Contact from './Pages/Contact'
 
 function App() {
 
