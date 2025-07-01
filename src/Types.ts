@@ -6,3 +6,10 @@ export interface Courses {
     category: string
     experience: string
 }
+
+export interface Students {
+    id: number
+    name: string
+    email: string
+    course: string
+}
