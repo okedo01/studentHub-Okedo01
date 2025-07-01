@@ -1,8 +1,38 @@
 import React from 'react'
+import { useStudentContext } from './StudentProvider';
+import { useForm } from 'react-hook-form';
 
-const EditStudentForm: React.FC = () => {
+type editStudentFormProps {
+  id: number;
+  closeForm: () => void;
+}
+
+const EditStudentForm: React.FC<editStudentFormProps> = ({id, closeForm}) => {
+  const { students, editStudents } = useStudentContext();
+  const student = students.find(stud => stud.id === id);
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: student,
+  })
+
+  const onSubmit = (data: any) => {
+    editStudents({...data, id})
+    closeForm();
+  }
+
   return (
-    <div>EditStudentForm</div>
+    <div>
+      <h3>Edit Student</h3>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input { ...register("name")} placeholder="Name"/>
+        <input { ...register("email")} placeholder="Email"/>
+        <input { ...register("course")} placeholder="Course"/>
+        <div>
+          <button>Update</button>
+          <button type="button" onClick={closeForm}>Cancel</button>
+        </div>
+      </form>
+    </div>
   )
 }
 
