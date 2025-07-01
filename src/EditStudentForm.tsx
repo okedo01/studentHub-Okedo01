@@ -2,13 +2,13 @@ import React from 'react'
 import { useStudentContext } from './StudentProvider';
 import { useForm } from 'react-hook-form';
 
-type editStudentFormProps {
+type editStudentFormProps = {
   id: number;
   closeForm: () => void;
 }
 
 const EditStudentForm: React.FC<editStudentFormProps> = ({id, closeForm}) => {
-  const { students, editStudents } = useStudentContext();
+  const { students, editStudent } = useStudentContext();
   const student = students.find(stud => stud.id === id);
 
   const { register, handleSubmit } = useForm({
@@ -16,7 +16,7 @@ const EditStudentForm: React.FC<editStudentFormProps> = ({id, closeForm}) => {
   })
 
   const onSubmit = (data: any) => {
-    editStudents({...data, id})
+    editStudent({...data, id})
     closeForm();
   }
 

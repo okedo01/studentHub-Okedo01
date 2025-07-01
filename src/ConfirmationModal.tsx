@@ -1,8 +1,20 @@
 import React from 'react'
 
-const ConfirmationModal: React.FC = () => {
+type confirmModalProps = {
+  message: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+const ConfirmationModal: React.FC<confirmModalProps> = ({message, onConfirm, onCancel}) => {
   return (
-    <div>ConfirmationModal</div>
+    <div>
+      <p>{ message }</p>
+      <div>
+        <button onClick={onConfirm}>Yes</button>
+        <button onClick={onCancel}>No</button>
+      </div>
+    </div>
   )
 }
 
