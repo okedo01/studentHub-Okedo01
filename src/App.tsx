@@ -7,6 +7,7 @@ import Register from './Register'
 import NotFound from './NotFound'
 import HubLayout from './HubLayout'
 import Contact from './Pages/Contact'
+import StudentList from './StudentList'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/courses" element={<Cards />} />
           <Route path="/courses/:id" element={<Register />} />
+          <Route path="/students" element={<StudentList />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
