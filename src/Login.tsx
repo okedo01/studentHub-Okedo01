@@ -9,7 +9,7 @@ const Login: React.FC = () => {
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         login();
-        navigate("/home");
+        navigate("/dashboard");
     }
 
     return (
