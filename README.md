@@ -1,69 +1,74 @@
-# React + TypeScript + Vite
+# 🎓 StudentHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+StudentHub is a modern web application built with **React + TypeScript** that allows users to browse available courses, register students, and manage enrollments with ease. It includes form validation, state management with Context API, and a beautiful UI using **ShadCN UI** components.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Demo
 
-## Expanding the ESLint configuration
+👉 [View Live Site](https://your-deployment-link.com)  
+👉 [GitHub Profile](https://github.com/okedo01)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📸 Screenshots
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+<!-- Add screenshots in your repo and link here -->
+![Home Page](./screenshots/home.png)
+![Register Page](./screenshots/register.png)
+![Student List](./screenshots/students.png)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 🧑‍🎓 Student Management
+- View list of enrolled students
+- Add new student via form
+- Edit existing student details
+- Delete students with confirmation modal
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 📚 Course Enrollment
+- Browse available courses (loaded from JSON)
+- Register a student to a selected course
+- View enrolled students per course
+- (Optional) Mock progress tracking
+
+### 🔐 Authentication (Mock)
+- Simple login form
+- Global auth state via Context API
+- Route protection for authenticated pages
+
+### ✅ Form Validation
+- Form handled using `React Hook Form`
+- Schema-based validation using `Zod`
+- Validates required fields, email format, passwords, etc.
+
+### 🎨 UI Components (ShadCN UI)
+- Styled buttons, inputs, cards, modals, and tabs
+- Responsive and accessible design with TailwindCSS
+
+### 🧯 Error Boundaries
+- Catches unexpected React errors
+- Displays fallback UI instead of crashing
+
+---
+
+## 🔧 Tech Stack
+
+| Tech            | Description                     |
+|-----------------|---------------------------------|
+| React           | UI library                      |
+| TypeScript      | Static typing                   |
+| React Router    | Routing                         |
+| Context API     | Global state management         |
+| React Hook Form | Form handling                   |
+| Zod             | Form validation schema          |
+| ShadCN UI       | UI components built on Radix    |
+| Tailwind CSS    | Utility-first CSS styling       |
+| SweetAlert2     | User-friendly popups/alerts     |
+
+---
+
+## 📁 Project Structure
+
