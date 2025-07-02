@@ -44,6 +44,7 @@ import Dashboard from './Dashboard';
 import ProtectedRoute from './ProtectedRoute'; 
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
+import Login from './Login';
 
 function App() {
   return (
@@ -56,7 +57,7 @@ function App() {
           <Route path="/courses" element={<Cards />} />
           <Route path="/courses/:id" element={<Register />} />
           <Route path="/students/:id" element={<StudentList />} />
-
+          <Route path="/login" element={<Login />} />
           <Route
             path="/dashboard"
             element={
