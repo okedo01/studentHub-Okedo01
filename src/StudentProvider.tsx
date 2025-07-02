@@ -7,6 +7,7 @@ type studentContextType = {
   addStudent: (student: Students) => void
   editStudent: (updated: Students) => void
   deleteStudent: (id: number) => void
+  clearAllStudents: () => void
 }
 
 const studentContext = createContext<studentContextType | undefined>(undefined)
@@ -49,8 +50,13 @@ const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     setStudents(prev => prev.filter(std => std.id !== id))
   }
 
+  const clearAllStudents = () => {
+  setStudents([])
+  localStorage.removeItem(LOCAL_KEY)
+}
+
   return (
-    <studentContext.Provider value={{ students, addStudent, editStudent, deleteStudent }}>
+    <studentContext.Provider value={{ students, addStudent, editStudent, deleteStudent, clearAllStudents }}>
       {children}
     </studentContext.Provider>
   )
