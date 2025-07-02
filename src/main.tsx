@@ -9,7 +9,7 @@ import AuthProvider from './AuthProvider.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider> {/* Auth comes first */}
+      <AuthProvider>
         <StudentProvider>
           <App />
         </StudentProvider>
