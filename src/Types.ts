@@ -7,9 +7,10 @@ export interface Courses {
     experience: string
 }
 
-export interface Students {
-    id: number
-    name: string
-    email: string
-    course: string
+export type Students = {
+  id: number
+  name: string
+  email: string
+  course: string
+  courseID: number
 }
