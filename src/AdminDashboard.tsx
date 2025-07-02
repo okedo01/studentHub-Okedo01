@@ -1,50 +1,38 @@
 import React from 'react';
+import { useStudentContext } from './StudentProvider';
 
 const AdminDashboard: React.FC = () => {
+  const { students, deleteStudent } = useStudentContext();
+
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10">
-      <h1 className="text-4xl font-bold text-blue-900 mb-6">👨‍💼 Admin Dashboard</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-blue-900">👨‍💼 Admin Dashboard</h1>
 
-      <p className="text-lg text-gray-800 mb-6">
-        Welcome, Admin! You have access to advanced tools and data to manage the platform efficiently.
-      </p>
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold text-blue-800 mb-4">📚 Manage Students</h2>
+        {students.length === 0 ? (
+          <p className="text-gray-600">No students enrolled yet.</p>
+        ) : (
+          students.map((student) => (
+            <div key={student.id} className="border p-4 rounded mb-3 bg-white shadow-sm">
+              <p><strong>Name:</strong> {student.name}</p>
+              <p><strong>Email:</strong> {student.email}</p>
+              <p><strong>Course:</strong> {student.course}</p>
+              <button
+                className="mt-2 px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                onClick={() => deleteStudent(student.id)}
+              >
+                Delete Student
+              </button>
+            </div>
+          ))
+        )}
+      </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="border rounded-lg p-4 shadow-sm bg-white">
-          <h2 className="text-xl font-semibold mb-2 text-blue-800">📚 Course Management</h2>
-          <ul className="list-disc list-inside text-gray-700">
-            <li>View all courses</li>
-            <li>Add or edit course details</li>
-            <li>Manage course availability</li>
-          </ul>
-        </div>
-
-        <div className="border rounded-lg p-4 shadow-sm bg-white">
-          <h2 className="text-xl font-semibold mb-2 text-blue-800">👥 Student Overview</h2>
-          <ul className="list-disc list-inside text-gray-700">
-            <li>View enrolled students</li>
-            <li>Filter by course or email</li>
-            <li>Export student data</li>
-          </ul>
-        </div>
-
-        <div className="border rounded-lg p-4 shadow-sm bg-white">
-          <h2 className="text-xl font-semibold mb-2 text-blue-800">🔒 User Roles</h2>
-          <ul className="list-disc list-inside text-gray-700">
-            <li>Assign or revoke admin roles</li>
-            <li>Manage login access</li>
-          </ul>
-        </div>
-
-        <div className="border rounded-lg p-4 shadow-sm bg-white">
-          <h2 className="text-xl font-semibold mb-2 text-blue-800">📈 Reports & Analytics</h2>
-          <ul className="list-disc list-inside text-gray-700">
-            <li>View registration statistics</li>
-            <li>Analyze course popularity</li>
-            <li>Monitor user activity</li>
-          </ul>
-        </div>
-      </div>
+      <section>
+        <h2 className="text-2xl font-semibold text-blue-800 mb-4">📝 Manage Courses</h2>
+        <p className="text-gray-600">Course management features can go here (edit, delete, add...)</p>
+      </section>
     </div>
   );
 };
