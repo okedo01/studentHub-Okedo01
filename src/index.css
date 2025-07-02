@@ -16,21 +16,40 @@
 
 .cards {
   background-color: var(--secondary);
-  box-shadow: -18px -12px 13px -6px rgba(0,0,0,0.1);
+  box-shadow: -18px -12px 13px -6px rgba(0, 0, 0, 0.1);
   border: none;
 }
 
 button {
   color: var(--tertiary);
 }
+
 button:hover {
   background-color: #457c8e;
   color: #B2CAD5;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
 
 .error {
   color: var(--error);
@@ -40,6 +59,7 @@ form {
   display: flex;
   flex-direction: column;
 }
+
 form input {
   margin-top: 10px;
   padding: 10px 20px;
@@ -48,12 +68,14 @@ form input {
   background-color: #B2CAD5;
   outline: none;
 }
+
 form button {
   margin-top: 20px;
   padding: 10px 0;
   background-color: var(--tertiary);
   color: var(--secondary);
 }
+
 form button:hover {
   background-color: #808080;
 }

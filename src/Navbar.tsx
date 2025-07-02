@@ -33,11 +33,6 @@ const Navbar: React.FC = () => {
                                 <Button>Contact Us</Button>
                             </NavigationMenuLink>
                     </NavigationMenuItem>
-                    <NavigationMenuItem>
-                            <NavigationMenuLink href="/courses" className="text-2xl">
-                                <Button>Courses</Button>
-                            </NavigationMenuLink>
-                    </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
         </div>
