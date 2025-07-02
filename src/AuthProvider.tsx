@@ -1,5 +1,5 @@
-import React, { useContext, useState, type ReactNode } from 'react'
-import { createContext } from 'vm';
+import React, { useContext, createContext, useState, type ReactNode } from 'react';
+import {  } from 'react';
 
 type AuthContextType = {
     isAuthenticated: boolean
@@ -7,7 +7,7 @@ type AuthContextType = {
     logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
@@ -24,7 +24,7 @@ const AuthProvider: React.FC<{children:React.ReactNode}> = ({children}) => {
     const logout = () => setIsAuthenticated(false);
 
   return (
-    <AuthContext.Provider>
+    <AuthContext.Provider value={{ login, logout, isAuthenticated }}>
         { children }
     </AuthContext.Provider>
   )
