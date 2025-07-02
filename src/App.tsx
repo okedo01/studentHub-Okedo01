@@ -21,10 +21,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/courses" element={<Cards />} />
           <Route path="/courses/:id" element={<Register />} />
-          <Route path="/students" element={<>
-            <AddStudentForm />
-            <StudentList />
-          </>} />
+          <Route path="/students/:id" element={<StudentList />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
