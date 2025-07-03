@@ -65,10 +65,10 @@ import Cards from './Cards';
 import Register from './Register';
 import StudentList from './StudentList';
 import Login from './Login';
-import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import HubLayout from './HubLayout';
 import NotFound from './NotFound';
+import SignUp from './SignUp';
 
 const AppRoutes = () => {
   return (
@@ -86,7 +86,8 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
-        <Route index element={<Navigate to="/dashboard" />} />
+        <Route index element={<Home />} />
+        <Route path="/dashboard" element={<Navigate to="/dashboard" />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="courses" element={<Cards />} />

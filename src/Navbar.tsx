@@ -1,42 +1,72 @@
-import React from 'react'
-import {
-    NavigationMenu,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-} from "@/components/ui/navigation-menu"
-import { Link } from 'react-router-dom'
-import { Button } from './components/ui/button'
+// import React from 'react'
+// import {
+//     NavigationMenu,
+//     NavigationMenuItem,
+//     NavigationMenuLink,
+//     NavigationMenuList,
+// } from "@/components/ui/navigation-menu"
+// import { Link } from 'react-router-dom'
+// import { Button } from './components/ui/button'
 
-const Navbar: React.FC = () => {
-    return (
-        <div className="flex justify-between items-center px-4 py-1 mb-8 nav">
-            <header>
-                <Link to="/">
-                    <img src="/studentHub.png" alt="studentHub" className="w-24 h-24 rounded-full cursor-pointer"/>
-                </Link>
-            </header>
-            <NavigationMenu>
-                <NavigationMenuList>
-                    <NavigationMenuItem>
-                            <NavigationMenuLink href="/" className="text-2xl">
-                                <Button>Home</Button>
-                            </NavigationMenuLink>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                            <NavigationMenuLink href="/about" className="text-2xl">
-                                <Button>About</Button>
-                            </NavigationMenuLink>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                            <NavigationMenuLink href="/contact" className="text-2xl">
-                                <Button>Contact Us</Button>
-                            </NavigationMenuLink>
-                    </NavigationMenuItem>
-                </NavigationMenuList>
-            </NavigationMenu>
-        </div>
-    )
-}
+// const Navbar: React.FC = () => {
+//     return (
+//         <div className="flex justify-between items-center px-4 py-1 mb-8 nav">
+//             <header>
+//                 <Link to="/">
+//                     <img src="/studentHub.png" alt="studentHub" className="w-24 h-24 rounded-full cursor-pointer"/>
+//                 </Link>
+//             </header>
+//             <NavigationMenu>
+//                 <NavigationMenuList>
+//                     <NavigationMenuItem>
+//                             <NavigationMenuLink href="/" className="text-2xl">
+//                                 <Button>Home</Button>
+//                             </NavigationMenuLink>
+//                     </NavigationMenuItem>
+//                     <NavigationMenuItem>
+//                             <NavigationMenuLink href="/about" className="text-2xl">
+//                                 <Button>About</Button>
+//                             </NavigationMenuLink>
+//                     </NavigationMenuItem>
+//                     <NavigationMenuItem>
+//                             <NavigationMenuLink href="/contact" className="text-2xl">
+//                                 <Button>Contact Us</Button>
+//                             </NavigationMenuLink>
+//                     </NavigationMenuItem>
+//                 </NavigationMenuList>
+//             </NavigationMenu>
+//         </div>
+//     )
+// }
 
-export default Navbar
+// export default Navbar
+
+
+import { useAuth } from './AuthProvider';
+import { useNavigate } from 'react-router-dom';
+
+const Navbar = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
+  return (
+    <nav className="flex justify-between items-center p-4 bg-gray-100">
+      <h1 className="text-lg font-bold">StudentHub</h1>
+      {user && (
+        <button
+          onClick={handleLogout}
+          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+        >
+          Logout
+        </button>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;
