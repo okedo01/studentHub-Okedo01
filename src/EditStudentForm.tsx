@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 type editStudentFormProps = {
-  id: number;
+  id: string;
   closeForm: () => void;
 }
 

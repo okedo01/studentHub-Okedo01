@@ -1,30 +1,72 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useStudentContext } from './StudentProvider'
-import EditStudentForm from './EditStudentForm'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { db } from './Firebase/Firebase';
+import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import EditStudentForm from './EditStudentForm';
+
+type Student = {
+  id: string;
+  name: string;
+  email: string;
+  course: string;
+  courseID: number;
+};
 
 const StudentList: React.FC = () => {
-  const { id } = useParams()
-  const courseID = Number(id)
-  const { students, deleteStudent, clearAllStudents } = useStudentContext()
-  const [editID, setEditID] = useState<number | null>(null)
+  const { id } = useParams();
+  const courseID = Number(id);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [editID, setEditID] = useState<string | null>(null);
 
-  const filtered = students.filter((s) => s.courseID === courseID)
+  // Fetch students from Firestore based on courseID
+  useEffect(() => {
+    const fetchStudents = async () => {
+      const q = query(collection(db, 'registrations'), where('courseID', '==', courseID));
+      const querySnapshot = await getDocs(q);
+      const results: Student[] = [];
+
+      querySnapshot.forEach((docSnap) => {
+        results.push({
+          id: docSnap.id,
+          ...(docSnap.data() as Omit<Student, 'id'>),
+        });
+      });
+
+      setStudents(results);
+    };
+
+    fetchStudents();
+  }, [courseID]);
+
+  // Delete a student from Firestore
+  const handleDelete = async (studentId: string, studentName: string) => {
+    const confirm = window.confirm(`Are you sure you want to delete ${studentName}?`);
+    if (!confirm) return;
+
+    try {
+      await deleteDoc(doc(db, 'registrations', studentId));
+      setStudents((prev) => prev.filter((s) => s.id !== studentId));
+    } catch (err) {
+      console.error('Failed to delete student:', err);
+    }
+  };
 
   return (
     <div className="max-w-3xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4 text-blue-900">Enrolled Students</h2>
 
-      {filtered.length === 0 ? (
+      {students.length === 0 ? (
         <p className="text-gray-700">No students enrolled in this course yet.</p>
       ) : (
-        filtered.map((student) => (
+        students.map((student) => (
           <div
             key={student.id}
             className="border p-3 mb-3 rounded transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.01]"
           >
             <p><strong>Name:</strong> {student.name}</p>
+            <p><strong>Email:</strong> {student.email}</p>
             <p><strong>Course:</strong> {student.course}</p>
+
             <div className="flex gap-2 mt-2">
               <button
                 onClick={() => setEditID(student.id)}
@@ -33,10 +75,7 @@ const StudentList: React.FC = () => {
                 Edit
               </button>
               <button
-                onClick={() => {
-                  const confirm = window.confirm(`Are you sure you want to delete ${student.name}?`);
-                  if (confirm) deleteStudent(student.id);
-                }}
+                onClick={() => handleDelete(student.id, student.name)}
                 className="bg-red-500 text-white px-3 py-1 rounded"
               >
                 Delete
@@ -46,23 +85,11 @@ const StudentList: React.FC = () => {
         ))
       )}
 
-      {students.length > 0 && (
-        <button
-          onClick={() => {
-            const confirm = window.confirm("Clear all students?");
-            if (confirm) clearAllStudents();
-          }}
-          className="bg-gray-500 text-white px-4 py-2 rounded mt-4"
-        >
-          Clear All Students
-        </button>
-      )}
-
       {editID !== null && (
         <EditStudentForm id={editID} closeForm={() => setEditID(null)} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default StudentList
+export default StudentList;

@@ -1,3 +1,5 @@
+import type { Timestamp } from "firebase/firestore"
+
 export interface Courses {
     id: number
     title: string
@@ -7,19 +9,12 @@ export interface Courses {
     experience: string
 }
 
-// export type Students = {
-//   id: number
-//   name: string
-//   email: string
-//   course: string
-//   courseID: number
-// }
-
 export type Student = {
-  id: string;             
+  id?: string; // Firestore auto-generated ID
   name: string;
   email: string;
-  courseId: string;      
-  courseTitle: string;     
-  timestamp: Date;
+  course: string;
+  courseID: number;
+  registeredAt: Timestamp;
 };
+
