@@ -19,7 +19,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
 
-      {/* Private Routes under ProtectedRoute */}
+      {/* Protected routes */}
       <Route
         path="/"
         element={
@@ -29,7 +29,6 @@ const AppRoutes = () => {
         }
       >
         <Route index element={<Home />} />
-        <Route path="/dashboard" element={<Navigate to="/dashboard" />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="courses" element={<Cards />} />
@@ -38,6 +37,9 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
       </Route>
+
+      {/* Optional default fallback */}
+      <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
 };

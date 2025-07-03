@@ -1,4 +1,3 @@
-// src/SignUp.tsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
@@ -18,7 +17,7 @@ const SignUp = () => {
       await signup(email, password);
       navigate('/');
     } catch (err) {
-      setError('Failed to sign up. Please try again.');
+      setError('User already exists or invalid input.');
     }
   };
 
@@ -26,9 +25,9 @@ const SignUp = () => {
     <form onSubmit={handleSubmit} className="max-w-sm mx-auto p-4">
       <h2 className="text-2xl mb-4">Sign Up</h2>
       {error && <p className="text-red-500">{error}</p>}
-      <input name="email" type="email" placeholder="Email" required className="input" />
-      <input name="password" type="password" placeholder="Password" required className="input" />
-      <button type="submit" className="btn btn-primary mt-2 w-full">Sign Up</button>
+      <input name="email" type="email" placeholder="Email" required className="input mb-2 w-full" />
+      <input name="password" type="password" placeholder="Password" required className="input mb-4 w-full" />
+      <button type="submit" className="btn btn-primary w-full">Sign Up</button>
     </form>
   );
 };
