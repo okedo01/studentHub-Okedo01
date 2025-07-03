@@ -41,7 +41,6 @@
 
 // export default Navbar
 
-
 import { useAuth } from './AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
@@ -55,16 +54,27 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center p-4 bg-gray-100">
-      <h1 className="text-lg font-bold">StudentHub</h1>
-      {user && (
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-        >
-          Logout
-        </button>
-      )}
+    <nav className="flex justify-between items-center p-4 bg-blue-900 text-white shadow-md">
+      <h1 className="text-xl font-bold">StudentHub</h1>
+
+      {user ? (
+        <div className="flex items-center gap-4">
+          {user.photoURL && (
+            <img
+              src={user.photoURL}
+              alt="User"
+              className="w-8 h-8 rounded-full object-cover"
+            />
+          )}
+          <span className="hidden sm:inline">{user.displayName || user.email}</span>
+          <button
+            onClick={handleLogout}
+            className="bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition"
+          >
+            Logout
+          </button>
+        </div>
+      ) : null}
     </nav>
   );
 };
