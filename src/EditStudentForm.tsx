@@ -4,13 +4,13 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 type editStudentFormProps = {
-  id: string;
+  docID: string;
   closeForm: () => void;
 }
 
-const EditStudentForm: React.FC<editStudentFormProps> = ({ id, closeForm }) => {
+const EditStudentForm: React.FC<editStudentFormProps> = ({ docID, closeForm }) => {
   const { students, editStudent } = useStudentContext();
-  const student = students.find(stud => stud.id === id);
+  const student = students.find(stud => stud.docID === docID);
 
   const { register, handleSubmit } = useForm({
     defaultValues: student,
@@ -26,7 +26,7 @@ const EditStudentForm: React.FC<editStudentFormProps> = ({ id, closeForm }) => {
       cancelButtonText: 'Cancel',
     }).then(result => {
       if (result.isConfirmed) {
-        editStudent({ ...data, id })
+        editStudent({ ...data, docID })
         closeForm()
         Swal.fire('Updated!', 'Student details have been updated.', 'success')
       }

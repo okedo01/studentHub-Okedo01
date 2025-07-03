@@ -10,7 +10,8 @@ export interface Courses {
 }
 
 export type Students = {
-  id?: string; 
+  docID?: string; 
+  id: number; 
   name: string;
   email: string;
   course: string;

@@ -5,7 +5,7 @@ import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/fire
 import EditStudentForm from './EditStudentForm';
 
 type Student = {
-  id: string;
+  docID: string;
   name: string;
   email: string;
   course: string;
@@ -27,8 +27,8 @@ const StudentList: React.FC = () => {
 
       querySnapshot.forEach((docSnap) => {
         results.push({
-          id: docSnap.id,
-          ...(docSnap.data() as Omit<Student, 'id'>),
+          docID: docSnap.id,
+          ...(docSnap.data() as Omit<Student, 'docID'>),
         });
       });
 
@@ -45,7 +45,7 @@ const StudentList: React.FC = () => {
 
     try {
       await deleteDoc(doc(db, 'registrations', studentId));
-      setStudents((prev) => prev.filter((s) => s.id !== studentId));
+      setStudents((prev) => prev.filter((s) => s.docID !== studentId));
     } catch (err) {
       console.error('Failed to delete student:', err);
     }
@@ -60,7 +60,7 @@ const StudentList: React.FC = () => {
       ) : (
         students.map((student) => (
           <div
-            key={student.id}
+            key={student.docID}
             className="border p-3 mb-3 rounded transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.01]"
           >
             <p><strong>Name:</strong> {student.name}</p>
@@ -69,13 +69,13 @@ const StudentList: React.FC = () => {
 
             <div className="flex gap-2 mt-2">
               <button
-                onClick={() => setEditID(student.id)}
+                onClick={() => setEditID(student.docID)}
                 className="bg-blue-500 text-white px-3 py-1 rounded"
               >
                 Edit
               </button>
               <button
-                onClick={() => handleDelete(student.id, student.name)}
+                onClick={() => handleDelete(student.docID, student.name)}
                 className="bg-red-500 text-white px-3 py-1 rounded"
               >
                 Delete
@@ -86,7 +86,7 @@ const StudentList: React.FC = () => {
       )}
 
       {editID !== null && (
-        <EditStudentForm id={editID} closeForm={() => setEditID(null)} />
+        <EditStudentForm docID={editID} closeForm={() => setEditID(null)} />
       )}
     </div>
   );

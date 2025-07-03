@@ -6,7 +6,7 @@ type studentContextType = {
   students: Students[];
   addStudent: (student: Students) => void;
   editStudent: (updated: Students) => void;
-  deleteStudent: (id: string) => void;
+  deleteStudent: (docID: string) => void;
   clearAllStudents: () => void;
 };
 
@@ -59,8 +59,8 @@ const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     );
   };
 
-  const deleteStudent = (id: string) => {
-    setStudents((prev) => prev.filter((std) => std.id !== id));
+  const deleteStudent = (docID: string) => {
+    setStudents((prev) => prev.filter((std) => std.docID !== docID));
   };
 
   const clearAllStudents = () => {
