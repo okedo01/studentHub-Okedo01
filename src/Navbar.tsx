@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
           <img
             src="/studentHub.png"
             alt="studentHub"
-            className="w-16 h-16 rounded-full cursor-pointer"
+            className="w-20 h-20 rounded-full cursor-pointer"
           />
         </Link>
 

@@ -9,7 +9,7 @@ export interface Courses {
     experience: string
 }
 
-export type Student = {
+export type Students = {
   id?: string; 
   name: string;
   email: string;
