@@ -42,7 +42,7 @@
 // export default Navbar
 
 import { useAuth } from './AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -55,7 +55,11 @@ const Navbar = () => {
 
   return (
     <nav className="flex justify-between items-center p-4 bg-blue-900 text-white shadow-md">
-      <h1 className="text-xl font-bold">StudentHub</h1>
+      <header>
+        <Link to="/">
+          <img src="/studentHub.png" alt="studentHub" className="w-24 h-24 rounded-full cursor-pointer" />
+        </Link>
+      </header>
 
       {user ? (
         <div className="flex items-center gap-4">
