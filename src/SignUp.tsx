@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 
 const SignUp = () => {
@@ -22,13 +22,41 @@ const SignUp = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto p-4">
-      <h2 className="text-2xl mb-4">Sign Up</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <input name="email" type="email" placeholder="Email" required className="input mb-2 w-full" />
-      <input name="password" type="password" placeholder="Password" required className="input mb-4 w-full" />
-      <button type="submit" className="btn btn-primary w-full">Sign Up</button>
-    </form>
+    <div className="max-w-sm mx-auto mt-10 p-6 border rounded shadow-md">
+      <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
+
+      {error && <p className="text-red-500 mb-2">{error}</p>}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+          className="w-full px-3 py-2 border rounded"
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          required
+          className="w-full px-3 py-2 border rounded"
+        />
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+        >
+          Sign Up
+        </button>
+      </form>
+
+      <div className="text-right mt-4">
+        <span className="text-sm text-gray-600 mr-2">Already have an account?</span>
+        <Link to="/login" className="text-blue-600 text-sm hover:underline">
+          Login
+        </Link>
+      </div>
+    </div>
   );
 };
 
