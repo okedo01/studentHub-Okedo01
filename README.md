@@ -1,6 +1,7 @@
+
 # 🎓 StudentHub
 
-StudentHub is a modern web application built with **React + TypeScript** that allows users to browse available courses, register students, and manage enrollments with ease. It includes form validation, state management with Context API, and a beautiful UI using **ShadCN UI** components.
+StudentHub is a modern web application built with **React + TypeScript** that allows users to browse available courses, register students, and manage enrollments with ease. It includes form validation, state management with Context API, real-time storage via **Firebase Firestore**, and a beautiful UI using **ShadCN UI** components.
 
 ---
 
@@ -14,8 +15,8 @@ StudentHub is a modern web application built with **React + TypeScript** that al
 ## 📸 Screenshots
 
 <!-- Add screenshots in your repo and link here -->
-![Home Page](./screenshots/home.png)
-![Register Page](./screenshots/register.png)
+![Home Page](./screenshots/home.png)  
+![Register Page](./screenshots/register.png)  
 ![Student List](./screenshots/students.png)
 
 ---
@@ -23,50 +24,59 @@ StudentHub is a modern web application built with **React + TypeScript** that al
 ## 🛠️ Features
 
 ### 🧑‍🎓 Student Management
-- View list of enrolled students
-- Add new student via form
-- Edit existing student details
-- Delete students with confirmation modal
+- View list of enrolled students (from Firebase Firestore)
+- Add new student via registration form
+- Edit student data (in-memory/local context)
+- Delete student records from Firebase with confirmation
 
 ### 📚 Course Enrollment
-- Browse available courses (loaded from JSON)
+- Browse available courses (loaded from local JSON)
 - Register a student to a selected course
 - View enrolled students per course
-- (Optional) Mock progress tracking
+- Auto-save student enrollment in Firebase
 
 ### 🔐 Authentication (Mock)
-- Simple login form
-- Global auth state via Context API
-- Route protection for authenticated pages
+- Simple login/signup form
+- Auth state handled via Context API
+- Route protection for logged-in users
+
+### 🔥 Firebase Integration
+- **Firestore** used to persist student registrations
+- Create, read, delete student documents in `registrations` collection
+- Timestamped records with `registeredAt`
+- Firestore rules can be configured for access control
 
 ### ✅ Form Validation
-- Form handled using `React Hook Form`
-- Schema-based validation using `Zod`
-- Validates required fields, email format, passwords, etc.
+- Powered by `React Hook Form` for efficient form handling
+- Integrated with `Zod` for schema-based validation
+- Validates email, passwords, and required fields
 
 ### 🎨 UI Components (ShadCN UI)
-- Styled buttons, inputs, cards, modals, and tabs
-- Responsive and accessible design with TailwindCSS
+- Beautiful, accessible design using Radix primitives
+- Buttons, inputs, cards, modals, tabs
+- Fully styled with Tailwind CSS
 
 ### 🧯 Error Boundaries
-- Catches unexpected React errors
+- Gracefully handles unexpected React errors
 - Displays fallback UI instead of crashing
 
 ---
 
 ## 🔧 Tech Stack
 
-| Tech            | Description                     |
-|-----------------|---------------------------------|
-| React           | UI library                      |
-| TypeScript      | Static typing                   |
-| React Router    | Routing                         |
-| Context API     | Global state management         |
-| React Hook Form | Form handling                   |
-| Zod             | Form validation schema          |
-| ShadCN UI       | UI components built on Radix    |
-| Tailwind CSS    | Utility-first CSS styling       |
-| SweetAlert2     | User-friendly popups/alerts     |
+| Tech             | Description                              |
+|------------------|------------------------------------------|
+| React            | UI library                               |
+| TypeScript       | Static typing                            |
+| React Router     | Routing between pages                    |
+| Context API      | Global state management                  |
+| React Hook Form  | Form management                          |
+| Zod              | Schema validation                        |
+| Firebase         | Backend-as-a-service (Firestore)         |
+| Firestore        | Realtime database for registrations      |
+| ShadCN UI        | Accessible UI built on Radix             |
+| Tailwind CSS     | Utility-first styling                    |
+| SweetAlert2      | Custom popups and notifications          |
 
 ---
 
