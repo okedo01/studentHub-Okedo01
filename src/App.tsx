@@ -1,5 +1,62 @@
-import { Routes, Route } from 'react-router-dom';
-import Dashboard from './Dashboard';
+// import { Routes, Route } from 'react-router-dom';
+// import Dashboard from './Dashboard';
+// import ProtectedRoute from './ProtectedRoute';
+// import Home from './Pages/Home';
+// import About from './Pages/About';
+// import Contact from './Pages/Contact';
+// import Cards from './Cards';
+// import Register from './Register';
+// import StudentList from './StudentList';
+// import NotFound from './NotFound';
+// import HubLayout from './HubLayout';
+// import AdminDashboard from './AdminDashboard';
+// import LogIn from './Login';
+
+// const AppRoutes = () => {
+//   return (
+//     <Routes>
+//       {/* Public + Nested routes under HubLayout */}
+//       <Route path="/" element={<HubLayout />}>
+//         <Route index element={<Home />} />
+//         <Route path="about" element={<About />} />
+//         <Route path="contact" element={<Contact />} />
+//         <Route path="courses" element={<Cards />} />
+//         <Route path="courses/:id" element={<Register />} />
+//         <Route path="students/:id" element={<StudentList />} />
+//         <Route path="/login" element={<LogIn />} />
+
+//         {/* ✅ Protected dashboard (any authenticated user) */}
+//         <Route
+//           path="dashboard"
+//           element={
+//             <ProtectedRoute>
+//               <Dashboard />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* ✅ Admin-only dashboard */}
+//         <Route
+//           path="admin"
+//           element={
+//             <ProtectedRoute role="admin">
+//               <AdminDashboard />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         <Route path="*" element={<NotFound />} />
+//       </Route>
+//     </Routes>
+//   );
+// };
+
+// export default AppRoutes;
+
+
+
+// src/AppRoutes.tsx
+import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -7,44 +64,35 @@ import Contact from './Pages/Contact';
 import Cards from './Cards';
 import Register from './Register';
 import StudentList from './StudentList';
-import NotFound from './NotFound';
+import Login from './Login';
+import SignUp from './SignUp';
+import Dashboard from './Dashboard';
 import HubLayout from './HubLayout';
-import AdminDashboard from './AdminDashboard';
-import LogIn from './Login';
+import NotFound from './NotFound';
 
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public + Nested routes under HubLayout */}
-      <Route path="/" element={<HubLayout />}>
-        <Route index element={<Home />} />
+      {/* Public routes */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+
+      {/* Private Routes under ProtectedRoute */}
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <HubLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Navigate to="/dashboard" />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="courses" element={<Cards />} />
         <Route path="courses/:id" element={<Register />} />
         <Route path="students/:id" element={<StudentList />} />
-        <Route path="/login" element={<LogIn />} />
-
-        {/* ✅ Protected dashboard (any authenticated user) */}
-        <Route
-          path="dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* ✅ Admin-only dashboard */}
-        <Route
-          path="admin"
-          element={
-            <ProtectedRoute role="admin">
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
