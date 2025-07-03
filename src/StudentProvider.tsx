@@ -55,7 +55,7 @@ const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
   const editStudent = (updated: Students) => {
     setStudents((prev) =>
-      prev.map((std) => (std.id === updated.id ? updated : std))
+      prev.map((std) => (std.docID === updated.docID ? updated : std))
     );
   };
 
