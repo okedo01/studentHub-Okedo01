@@ -14,13 +14,17 @@ const AdminDashboard: React.FC = () => {
           <p className="text-gray-600">No students enrolled yet.</p>
         ) : (
           students.map((student) => (
-            <div key={student.id} className="border p-4 rounded mb-3 bg-white shadow-sm">
+            <div
+              key={student.docID} // Use docID as key
+              className="border p-4 rounded mb-3 bg-white shadow-sm"
+            >
               <p><strong>Name:</strong> {student.name}</p>
               <p><strong>Email:</strong> {student.email}</p>
               <p><strong>Course:</strong> {student.course}</p>
               <button
                 className="mt-2 px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                onClick={() => deleteStudent(student.id)}
+                onClick={() => student.docID && deleteStudent(student.docID)} // pass docID
+                disabled={!student.docID} // disable if no docID to avoid errors
               >
                 Delete Student
               </button>

@@ -43,8 +43,7 @@ const Register: React.FC = () => {
   const onSubmit = async (data: formData) => {
     const now = Timestamp.now();
 
-    const student: Students = {
-      id: Date.now().toString(), // string id as required
+    const newStudentData = {
       name: data.email.split('@')[0],
       email: data.email,
       course: course?.title || '',
@@ -53,13 +52,20 @@ const Register: React.FC = () => {
     };
 
     try {
-      // Save to context (local state)
+      // Save to Firestore and get the generated document reference
+      const docRef = await addDoc(collection(db, 'registrations'), newStudentData);
+
+      // Construct full student object including Firestore docID and numeric id
+      const student: Students = {
+        docID: docRef.id,       // Firestore doc ID string
+        id: Date.now(),         // your numeric student ID (optional)
+        ...newStudentData,
+      };
+
+      // Save to local context
       addStudent(student);
 
-      // Save to Firebase Firestore
-      await addDoc(collection(db, 'registrations'), student);
-
-      // Success alert
+      // Show success alert
       Swal.fire({
         title: '🎉 Registration Successful!',
         text: `You are now enrolled in "${course?.title}"`,
