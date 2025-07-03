@@ -10,7 +10,7 @@ export interface Courses {
 }
 
 export type Student = {
-  id?: string; // Firestore auto-generated ID
+  id?: string; 
   name: string;
   email: string;
   course: string;
