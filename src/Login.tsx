@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
 
 const Login: React.FC = () => {
-  const { login, loginWithGoogle, role } = useAuth();
+  const { login, loginWithGoogle, user, role } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const [loggingIn, setLoggingIn] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,37 +16,34 @@ const Login: React.FC = () => {
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
 
     try {
+      setLoggingIn(true);
       await login(email, password);
-
-      // Wait briefly for role to update (since role comes from localStorage in AuthProvider)
-      setTimeout(() => {
-        if (role === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/');
-        }
-      }, 100);
     } catch (err) {
       setError('Invalid email or password.');
+      setLoggingIn(false);
     }
   };
 
   const handleGoogleLogin = async () => {
     try {
+      setLoggingIn(true);
       await loginWithGoogle();
-
-      // Wait briefly for role to update
-      setTimeout(() => {
-        if (role === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/');
-        }
-      }, 100);
     } catch (err) {
       setError('Google login failed. Try again.');
+      setLoggingIn(false);
     }
   };
+
+  // Wait for user and role to be ready after login
+  useEffect(() => {
+    if (user && role) {
+      if (role === 'admin') {
+        navigate('/dashboard');
+      } else {
+        navigate('/');
+      }
+    }
+  }, [user, role, navigate]);
 
   return (
     <>
@@ -78,9 +76,10 @@ const Login: React.FC = () => {
           />
           <button
             type="submit"
+            disabled={loggingIn}
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
-            Login
+            {loggingIn ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
@@ -88,6 +87,7 @@ const Login: React.FC = () => {
 
         <button
           onClick={handleGoogleLogin}
+          disabled={loggingIn}
           className="flex items-center justify-center gap-2 w-full bg-white border px-4 py-2 rounded shadow hover:bg-gray-100 transition"
         >
           <FcGoogle size={22} />
