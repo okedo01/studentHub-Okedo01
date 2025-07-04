@@ -51,7 +51,7 @@ const Contact: React.FC = () => {
         <hr className="my-10 border-t border-blue-200" />
 
         <div className="text-gray-700 text-sm space-y-2 text-center sm:text-left">
-          <p>📧 <strong>Email:</strong>eliahmwelangi01@gmail.com</p>
+          <p>📧 <strong>Email:</strong><br>eliahmwelangi01@gmail.com</br></p>
           <p>📍 <strong>Location:</strong> Dar es Salaam, Tanzania</p>
           <p>⏰ <strong>Hours:</strong> Mon – Fri, 9:00 AM – 5:00 PM</p>
           <p>
