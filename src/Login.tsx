@@ -4,7 +4,7 @@ import { useAuth } from './AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
 
 const Login: React.FC = () => {
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, role } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -16,7 +16,15 @@ const Login: React.FC = () => {
 
     try {
       await login(email, password);
-      navigate('/');
+
+      // Wait briefly for role to update (since role comes from localStorage in AuthProvider)
+      setTimeout(() => {
+        if (role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
+      }, 100);
     } catch (err) {
       setError('Invalid email or password.');
     }
@@ -25,7 +33,15 @@ const Login: React.FC = () => {
   const handleGoogleLogin = async () => {
     try {
       await loginWithGoogle();
-      navigate('/');
+
+      // Wait briefly for role to update
+      setTimeout(() => {
+        if (role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
+      }, 100);
     } catch (err) {
       setError('Google login failed. Try again.');
     }

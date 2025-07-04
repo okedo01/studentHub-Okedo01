@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="bg-blue-900 text-white shadow-md sticky top-0 z-50">
       <div className="flex justify-between items-center px-4 py-2 max-w-7xl mx-auto">
-        {/* Logo */}
+        
         <Link to="/">
           <img
             src="/studentHub.png"
@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
           />
         </Link>
 
-        {/* Desktop Navigation */}
+      
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="flex items-center gap-2">
             <NavigationMenuItem>
@@ -88,13 +88,13 @@ const Navbar: React.FC = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Mobile Toggle */}
+        
         <button className="md:hidden text-2xl" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
 
-      {/* Mobile Dropdown */}
+    
       {isOpen && (
         <div className="md:hidden bg-blue-800 px-4 pb-4">
           <ul className="flex flex-col gap-3">
