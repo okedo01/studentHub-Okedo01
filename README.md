@@ -7,7 +7,7 @@ StudentHub is a modern web application built with **React + TypeScript** that al
 
 ## 🔗 Live Demo
 
-👉 [View Live Site](https://your-deployment-link.com)  
+👉 [View Live Site](https://student-hub-okedo01.netlify.app/login)  
 👉 [GitHub Profile](https://github.com/okedo01)
 
 ---
