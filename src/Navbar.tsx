@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link to="/">
-                  <Button variant="default" className="text-white text-lg">
+                  <Button className="bg-white text-blue-900 text-lg hover:bg-gray-200">
                     Home
                   </Button>
                 </Link>
@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link to="/about">
-                  <Button variant="ghost" className="text-white text-lg">
+                  <Button className="bg-white text-blue-900 text-lg hover:bg-gray-200">
                     About
                   </Button>
                 </Link>
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link to="/contact">
-                  <Button variant="ghost" className="text-white text-lg">
+                  <Button className="bg-white text-blue-900 text-lg hover:bg-gray-200">
                     Contact Us
                   </Button>
                 </Link>
@@ -78,8 +78,7 @@ const Navbar: React.FC = () => {
                 <NavigationMenuItem>
                   <Button
                     onClick={handleLogout}
-                    variant="destructive"
-                    className="text-white text-sm"
+                    className="bg-white text-red-600 text-sm hover:bg-gray-200"
                   >
                     Logout
                   </Button>
@@ -133,7 +132,7 @@ const Navbar: React.FC = () => {
                       handleLogout();
                       setIsOpen(false);
                     }}
-                    className="text-red-400"
+                    className="text-white bg-red-600 px-3 py-1 rounded"
                   >
                     Logout
                   </button>
