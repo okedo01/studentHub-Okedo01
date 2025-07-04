@@ -10,7 +10,6 @@ const Contact: React.FC = () => {
           Fill out the form below or reach out through the contacts provided.
         </p>
 
-        {/* Form */}
         <form className="space-y-5">
           <div>
             <label className="block font-medium mb-1 text-blue-800">Full Name</label>
@@ -49,12 +48,10 @@ const Contact: React.FC = () => {
           </button>
         </form>
 
-        {/* Divider */}
         <hr className="my-10 border-t border-blue-200" />
 
-        {/* Contact Info */}
         <div className="text-gray-700 text-sm space-y-2 text-center sm:text-left">
-          <p>📧 <strong>Email:</strong> support@studenthub.com</p>
+          <p>📧 <strong>Email:</strong>eliahmwelangi01@gmail.com</p>
           <p>📍 <strong>Location:</strong> Dar es Salaam, Tanzania</p>
           <p>⏰ <strong>Hours:</strong> Mon – Fri, 9:00 AM – 5:00 PM</p>
           <p>
