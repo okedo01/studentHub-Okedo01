@@ -6,6 +6,7 @@ const SignUp = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,11 +14,15 @@ const SignUp = () => {
     const email = (form.elements.namedItem('email') as HTMLInputElement).value;
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
 
+    setError('');
+    setLoading(true);
     try {
       await signup(email, password);
       navigate('/');
     } catch (err) {
-      setError('User already exists or invalid input.');
+      setError('❌ User already exists or invalid input.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -31,9 +36,9 @@ const SignUp = () => {
         />
       </div>
       <div className="max-w-sm mx-auto my-5 p-6 border rounded shadow-md">
-        <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
 
-        {error && <p className="text-red-500 mb-2">{error}</p>}
+        {error && <p className="text-red-500 mb-2 text-center">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -52,9 +57,10 @@ const SignUp = () => {
           />
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
           >
-            Sign Up
+            {loading ? 'Signing up...' : 'Sign Up'}
           </button>
         </form>
 
