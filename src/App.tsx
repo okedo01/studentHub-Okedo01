@@ -7,12 +7,11 @@ import Cards from './Cards';
 import Register from './Register';
 import StudentList from './StudentList';
 import Login from './Login';
-// import Dashboard from './AdminDashboard';
 import HubLayout from './HubLayout';
 import NotFound from './NotFound';
 import SignUp from './SignUp';
 import { useAuth } from './AuthProvider';
-// import AdminDashboard from './AdminDashboard';
+import CourseProgress from './MockProgress/CourseProgress'; // 👈 import it here
 
 const AppRoutes = () => {
   const { role } = useAuth();
@@ -29,6 +28,23 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute requiredRole="admin">
             <StudentList />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/students/:id"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <StudentList />
+          </ProtectedRoute>
+        }
+      />
+      {/* 👇 Course Progress route */}
+      <Route
+        path="/progress/:courseID/:studentID"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <CourseProgressWrapper />
           </ProtectedRoute>
         }
       />
@@ -50,19 +66,32 @@ const AppRoutes = () => {
         <Route path="*" element={<NotFound />} />
       </Route>
 
-      {/* Admin-only Student View (outside HubLayout) */}
+      {/* Catch-All Redirect */}
       <Route
-        path="/students/:id"
+        path="*"
         element={
-          <ProtectedRoute requiredRole="admin">
-            <StudentList />
-          </ProtectedRoute>
+          <Navigate
+            to={role === 'admin' ? '/dashboard' : role === 'student' ? '/' : '/login'}
+            replace
+          />
         }
       />
-
-      {/* Catch-All Redirect */}
-      <Route path="*" element={<Navigate to={role === 'admin' ? '/dashboard' : role === 'student' ? '/' : '/login'} replace />} />
     </Routes>
+  );
+};
+
+// Optional wrapper to extract params
+import { useParams, useNavigate } from 'react-router-dom';
+const CourseProgressWrapper = () => {
+  const { courseID, studentID } = useParams();
+  const navigate = useNavigate();
+
+  return (
+    <CourseProgress
+      courseID={Number(courseID)}
+      studentID={studentID!}
+      onClose={() => navigate(-1)}
+    />
   );
 };
 
