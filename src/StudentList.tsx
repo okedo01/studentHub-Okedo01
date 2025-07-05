@@ -15,26 +15,17 @@ import EditStudentForm from './EditStudentForm';
 import LogoutButton from './LogoutBtn';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-// Student Type
-type Student = {
-  docID: string;
-  name: string;
-  email: string;
-  course: string;
-  courseID: number;
-  progress?: number;
-};
+import { Exercises, type Students } from './Types';
 
 // Grouped by course
 type GroupedStudents = {
-  [courseName: string]: Student[];
+  [courseName: string]: Students[];
 };
 
 const StudentList: React.FC = () => {
   const { id } = useParams();
   const courseID = id ? Number(id) : null;
-  const [students, setStudents] = useState<Student[]>([]);
+  const [students, setStudents] = useState<Students[]>([]);
   const [editID, setEditID] = useState<string | null>(null);
   const [viewProgressID, setViewProgressID] = useState<string | null>(null);
   const [search, setSearch] = useState('');
@@ -47,11 +38,11 @@ const StudentList: React.FC = () => {
           : collection(db, 'registrations');
 
         const querySnapshot = await getDocs(q);
-        const results: Student[] = [];
+        const results: Students[] = [];
         const emails = new Set<string>();
 
         querySnapshot.forEach((docSnap) => {
-          const studentData = docSnap.data() as Omit<Student, 'docID'>;
+          const studentData = docSnap.data() as Omit<Students, 'docID'>;
           if (!emails.has(studentData.email)) {
             emails.add(studentData.email);
             results.push({ docID: docSnap.id, ...studentData });
@@ -81,7 +72,7 @@ const StudentList: React.FC = () => {
     }
   };
 
-  const groupByCourse = (students: Student[]): GroupedStudents => {
+  const groupByCourse = (students: Students[]): GroupedStudents => {
     return students.reduce((acc, student) => {
       if (!acc[student.course]) acc[student.course] = [];
       acc[student.course].push(student);
@@ -89,9 +80,9 @@ const StudentList: React.FC = () => {
     }, {} as GroupedStudents);
   };
 
-  const handleStudentUpdate = async (updatedStudent: Student) => {
+  const handleStudentUpdate = async (updatedStudent: Students) => {
     try {
-      const studentRef = doc(db, 'registrations', updatedStudent.docID);
+      const studentRef = doc(db, 'registrations', updatedStudent.docID!);
       const snapshot = await getDoc(studentRef);
       if (snapshot.exists()) {
         await updateDoc(studentRef, {
@@ -99,7 +90,9 @@ const StudentList: React.FC = () => {
           email: updatedStudent.email,
           course: updatedStudent.course,
           courseID: updatedStudent.courseID,
-          progress: updatedStudent.progress || 0
+          progress: updatedStudent.progress || 0,
+          registeredAt: updatedStudent.registeredAt,
+          id: updatedStudent.id,
         });
         setStudents((prev) =>
           prev.map((s) => (s.docID === updatedStudent.docID ? updatedStudent : s))
@@ -120,17 +113,28 @@ const StudentList: React.FC = () => {
 
   const grouped = courseID ? null : groupByCourse(filteredStudents);
 
-  const ProgressComponent = ({ progress }: { progress?: number }) => (
-    <div className="mt-2 p-2 border rounded bg-green-100">
-      <p><strong>Mock Progress:</strong> {progress ?? 0}% complete</p>
-      <div className="w-full bg-gray-300 rounded-full h-2.5 mt-1">
-        <div
-          className="bg-green-600 h-2.5 rounded-full"
-          style={{ width: `${progress ?? 0}%` }}
-        ></div>
+  const ProgressComponent = ({ progress, courseID }: { progress?: number; courseID?: number }) => {
+    const exercisesForCourse = courseID ? Exercises[courseID] || [] : [];
+    const completed = Math.floor((progress ?? 0) / 100 * exercisesForCourse.length);
+    return (
+      <div className="mt-2 p-2 border rounded bg-green-100">
+        <p><strong>Mock Progress:</strong> {progress ?? 0}% complete</p>
+        <div className="w-full bg-gray-300 rounded-full h-2.5 mt-1">
+          <div
+            className="bg-green-600 h-2.5 rounded-full"
+            style={{ width: `${progress ?? 0}%` }}
+          ></div>
+        </div>
+        <ul className="mt-2 list-disc list-inside text-sm">
+          {exercisesForCourse.map((ex, idx) => (
+            <li key={idx} className={idx < completed ? 'text-green-700' : 'text-gray-500'}>
+              {ex} {idx < completed ? '✅' : ''}
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -164,26 +168,28 @@ const StudentList: React.FC = () => {
 
             <div className="flex gap-2 mt-2">
               <button
-                onClick={() => setEditID(student.docID)}
+                onClick={() => setEditID(student.docID!)}
                 className="bg-blue-500 text-white px-3 py-1 rounded"
               >
                 Edit
               </button>
               <button
-                onClick={() => handleDelete(student.docID, student.name)}
+                onClick={() => handleDelete(student.docID!, student.name)}
                 className="bg-red-500 text-white px-3 py-1 rounded"
               >
                 Delete
               </button>
               <button
-                onClick={() => setViewProgressID(student.docID)}
+                onClick={() => setViewProgressID(student.docID!)}
                 className="bg-green-600 text-white px-3 py-1 rounded"
               >
                 View Progress
               </button>
             </div>
 
-            {viewProgressID === student.docID && <ProgressComponent progress={student.progress} />}
+            {viewProgressID === student.docID && (
+              <ProgressComponent progress={student.progress} courseID={student.courseID} />
+            )}
           </div>
         ))
       ) : (
@@ -203,26 +209,28 @@ const StudentList: React.FC = () => {
 
                 <div className="flex gap-2 mt-2">
                   <button
-                    onClick={() => setEditID(student.docID)}
+                    onClick={() => setEditID(student.docID!)}
                     className="bg-blue-500 text-white px-3 py-1 rounded"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(student.docID, student.name)}
+                    onClick={() => handleDelete(student.docID!, student.name)}
                     className="bg-red-500 text-white px-3 py-1 rounded"
                   >
                     Delete
                   </button>
                   <button
-                    onClick={() => setViewProgressID(student.docID)}
+                    onClick={() => setViewProgressID(student.docID!)}
                     className="bg-green-600 text-white px-3 py-1 rounded"
                   >
                     View Progress
                   </button>
                 </div>
 
-                {viewProgressID === student.docID && <ProgressComponent progress={student.progress} />}
+                {viewProgressID === student.docID && (
+                  <ProgressComponent progress={student.progress} courseID={student.courseID} />
+                )}
               </div>
             ))}
           </div>
@@ -233,7 +241,7 @@ const StudentList: React.FC = () => {
         <EditStudentForm
           docID={editID}
           closeForm={() => setEditID(null)}
-          onSave={handleStudentUpdate}
+          onSave={handleStudentUpdate as any} // cast to suppress TS warning
         />
       )}
     </div>
