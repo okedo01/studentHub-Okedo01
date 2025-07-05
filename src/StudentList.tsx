@@ -13,15 +13,20 @@ import {
 } from 'firebase/firestore';
 import EditStudentForm from './EditStudentForm';
 import LogoutButton from './LogoutBtn';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+// Student Type
 type Student = {
   docID: string;
   name: string;
   email: string;
   course: string;
   courseID: number;
+  progress?: number;
 };
 
+// Grouped by course
 type GroupedStudents = {
   [courseName: string]: Student[];
 };
@@ -31,24 +36,32 @@ const StudentList: React.FC = () => {
   const courseID = id ? Number(id) : null;
   const [students, setStudents] = useState<Student[]>([]);
   const [editID, setEditID] = useState<string | null>(null);
+  const [viewProgressID, setViewProgressID] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchStudents = async () => {
-      const q = courseID
-        ? query(collection(db, 'registrations'), where('courseID', '==', courseID))
-        : collection(db, 'registrations');
+      try {
+        const q = courseID
+          ? query(collection(db, 'registrations'), where('courseID', '==', courseID))
+          : collection(db, 'registrations');
 
-      const querySnapshot = await getDocs(q);
-      const results: Student[] = [];
+        const querySnapshot = await getDocs(q);
+        const results: Student[] = [];
+        const emails = new Set<string>();
 
-      querySnapshot.forEach((docSnap) => {
-        results.push({
-          docID: docSnap.id,
-          ...(docSnap.data() as Omit<Student, 'docID'>),
+        querySnapshot.forEach((docSnap) => {
+          const studentData = docSnap.data() as Omit<Student, 'docID'>;
+          if (!emails.has(studentData.email)) {
+            emails.add(studentData.email);
+            results.push({ docID: docSnap.id, ...studentData });
+          }
         });
-      });
 
-      setStudents(results);
+        setStudents(results);
+      } catch (error) {
+        toast.error('Failed to fetch students');
+      }
     };
 
     fetchStudents();
@@ -61,8 +74,10 @@ const StudentList: React.FC = () => {
     try {
       await deleteDoc(doc(db, 'registrations', studentId));
       setStudents((prev) => prev.filter((s) => s.docID !== studentId));
+      toast.success('Student deleted successfully');
     } catch (err) {
       console.error('Failed to delete student:', err);
+      toast.error('Error deleting student');
     }
   };
 
@@ -84,17 +99,38 @@ const StudentList: React.FC = () => {
           email: updatedStudent.email,
           course: updatedStudent.course,
           courseID: updatedStudent.courseID,
+          progress: updatedStudent.progress || 0
         });
         setStudents((prev) =>
           prev.map((s) => (s.docID === updatedStudent.docID ? updatedStudent : s))
         );
+        toast.success('Student updated successfully');
       }
     } catch (err) {
       console.error('Failed to update student:', err);
+      toast.error('Error updating student');
     }
   };
 
-  const grouped = courseID ? null : groupByCourse(students);
+  const filteredStudents = students.filter(
+    (s) =>
+      s.name.toLowerCase().includes(search.toLowerCase()) ||
+      s.course.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const grouped = courseID ? null : groupByCourse(filteredStudents);
+
+  const ProgressComponent = ({ progress }: { progress?: number }) => (
+    <div className="mt-2 p-2 border rounded bg-green-100">
+      <p><strong>Mock Progress:</strong> {progress ?? 0}% complete</p>
+      <div className="w-full bg-gray-300 rounded-full h-2.5 mt-1">
+        <div
+          className="bg-green-600 h-2.5 rounded-full"
+          style={{ width: `${progress ?? 0}%` }}
+        ></div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -103,10 +139,18 @@ const StudentList: React.FC = () => {
         {courseID ? 'Enrolled Students in This Course' : 'All Registered Students Grouped by Course'}
       </h2>
 
-      {students.length === 0 ? (
+      <input
+        type="text"
+        placeholder="Search by name or course..."
+        className="w-full px-3 py-2 mb-4 border rounded"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      {filteredStudents.length === 0 ? (
         <p className="text-gray-700">No students registered yet.</p>
       ) : courseID ? (
-        students.map((student) => (
+        filteredStudents.map((student) => (
           <div
             key={student.docID}
             className="border p-3 mb-3 rounded transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.01]"
@@ -114,6 +158,9 @@ const StudentList: React.FC = () => {
             <p><strong>Name:</strong> {student.name}</p>
             <p><strong>Email:</strong> {student.email}</p>
             <p><strong>Course:</strong> {student.course}</p>
+            {student.progress !== undefined && (
+              <p><strong>Progress:</strong> {student.progress}%</p>
+            )}
 
             <div className="flex gap-2 mt-2">
               <button
@@ -128,7 +175,15 @@ const StudentList: React.FC = () => {
               >
                 Delete
               </button>
+              <button
+                onClick={() => setViewProgressID(student.docID)}
+                className="bg-green-600 text-white px-3 py-1 rounded"
+              >
+                View Progress
+              </button>
             </div>
+
+            {viewProgressID === student.docID && <ProgressComponent progress={student.progress} />}
           </div>
         ))
       ) : (
@@ -142,6 +197,9 @@ const StudentList: React.FC = () => {
               >
                 <p><strong>Name:</strong> {student.name}</p>
                 <p><strong>Email:</strong> {student.email}</p>
+                {student.progress !== undefined && (
+                  <p><strong>Progress:</strong> {student.progress}%</p>
+                )}
 
                 <div className="flex gap-2 mt-2">
                   <button
@@ -156,7 +214,15 @@ const StudentList: React.FC = () => {
                   >
                     Delete
                   </button>
+                  <button
+                    onClick={() => setViewProgressID(student.docID)}
+                    className="bg-green-600 text-white px-3 py-1 rounded"
+                  >
+                    View Progress
+                  </button>
                 </div>
+
+                {viewProgressID === student.docID && <ProgressComponent progress={student.progress} />}
               </div>
             ))}
           </div>
