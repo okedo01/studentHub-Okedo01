@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from './Firebase/Firebase';
-import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+  getDoc,
+  updateDoc
+} from 'firebase/firestore';
 import EditStudentForm from './EditStudentForm';
 import LogoutButton from './LogoutBtn';
 
@@ -65,12 +74,33 @@ const StudentList: React.FC = () => {
     }, {} as GroupedStudents);
   };
 
+  const handleStudentUpdate = async (updatedStudent: Student) => {
+    try {
+      const studentRef = doc(db, 'registrations', updatedStudent.docID);
+      const snapshot = await getDoc(studentRef);
+      if (snapshot.exists()) {
+        await updateDoc(studentRef, {
+          name: updatedStudent.name,
+          email: updatedStudent.email,
+          course: updatedStudent.course,
+          courseID: updatedStudent.courseID,
+        });
+        setStudents((prev) =>
+          prev.map((s) => (s.docID === updatedStudent.docID ? updatedStudent : s))
+        );
+      }
+    } catch (err) {
+      console.error('Failed to update student:', err);
+    }
+  };
+
   const grouped = courseID ? null : groupByCourse(students);
 
   return (
     <div className="max-w-4xl mx-auto p-6">
       <LogoutButton />
-      <h2 className="text-3xl font-bold mb-4 text-blue-900">{courseID ? 'Enrolled Students in This Course' : 'All Registered Students Grouped by Course'}
+      <h2 className="text-3xl font-bold mb-4 text-blue-900">
+        {courseID ? 'Enrolled Students in This Course' : 'All Registered Students Grouped by Course'}
       </h2>
 
       {students.length === 0 ? (
@@ -134,7 +164,11 @@ const StudentList: React.FC = () => {
       )}
 
       {editID !== null && (
-        <EditStudentForm docID={editID} closeForm={() => setEditID(null)} />
+        <EditStudentForm
+          docID={editID}
+          closeForm={() => setEditID(null)}
+          onSave={handleStudentUpdate}
+        />
       )}
     </div>
   );

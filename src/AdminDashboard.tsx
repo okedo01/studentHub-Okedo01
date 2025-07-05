@@ -17,7 +17,7 @@ const AdminDashboard: React.FC = () => {
         ) : (
           students.map((student) => (
             <div
-              key={student.docID} // Use docID as key
+              key={student.docID} 
               className="border p-4 rounded mb-3 bg-white shadow-sm"
             >
               <p><strong>Name:</strong> {student.name}</p>
