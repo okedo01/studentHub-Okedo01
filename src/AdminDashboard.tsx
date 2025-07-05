@@ -1,11 +1,13 @@
 import React from 'react';
 import { useStudentContext } from './StudentProvider';
+import LogoutButton from './LogoutBtn';
 
 const AdminDashboard: React.FC = () => {
   const { students, deleteStudent } = useStudentContext();
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
+      <LogoutButton />
       <h1 className="text-3xl font-bold mb-6 text-blue-900">👨‍💼 Admin Dashboard</h1>
 
       <section className="mb-10">
@@ -23,8 +25,8 @@ const AdminDashboard: React.FC = () => {
               <p><strong>Course:</strong> {student.course}</p>
               <button
                 className="mt-2 px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                onClick={() => student.docID && deleteStudent(student.docID)} // pass docID
-                disabled={!student.docID} // disable if no docID to avoid errors
+                onClick={() => student.docID && deleteStudent(student.docID)} 
+                disabled={!student.docID} 
               >
                 Delete Student
               </button>
