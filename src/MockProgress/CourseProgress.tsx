@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase/Firebase';
 import { Exercises, ExerciseAnswers } from '@/Types';
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
   courseID: number;
@@ -10,14 +9,12 @@ interface Props {
   onClose: () => void
 }
 
-const CourseProgress: React.FC<Props> = ({ courseID, studentID }) => {
+const CourseProgress: React.FC<Props> = ({ courseID, studentID, onClose }) => {
   const questions = Exercises[courseID] || [];
   const correctAnswers = ExerciseAnswers[courseID] || [];
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const loadAnswers = async () => {
@@ -59,7 +56,7 @@ const CourseProgress: React.FC<Props> = ({ courseID, studentID }) => {
   };
 
   const handleClose = () => {
-    navigate('/'); // 👈 Navigates to Home route
+    onClose(); 
   };
 
   return (

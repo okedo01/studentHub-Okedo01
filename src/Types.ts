@@ -1,4 +1,3 @@
-import type { CaaRecord } from "dns"
 import type { Timestamp } from "firebase/firestore"
 
 export interface Courses {

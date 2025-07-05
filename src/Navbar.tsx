@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Button } from './components/ui/button';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import CourseProgress from './MockProgress/CourseProgress';
 
 const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
