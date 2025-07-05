@@ -16,6 +16,7 @@ import LogoutButton from './LogoutBtn';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Exercises, type Students } from './Types';
+import CourseProgress from './MockProgress/CourseProgress';  // Import the CourseProgress component you created
 
 type GroupedStudents = {
   [courseName: string]: Students[];
@@ -27,6 +28,7 @@ const StudentList: React.FC = () => {
   const [students, setStudents] = useState<Students[]>([]);
   const [editID, setEditID] = useState<string | null>(null);
   const [viewProgressID, setViewProgressID] = useState<string | null>(null);
+  const [exerciseStudentID, setExerciseStudentID] = useState<string | null>(null); // New: track student answering exercises
   const [search, setSearch] = useState('');
 
   useEffect(() => {
@@ -114,7 +116,7 @@ const StudentList: React.FC = () => {
 
   const ProgressComponent = ({ progress, courseID }: { progress?: number; courseID?: number }) => {
     const exercisesForCourse = courseID ? Exercises[courseID] || [] : [];
-    const completed = Math.floor((progress ?? 0) / 100 * exercisesForCourse.length);
+    const completed = Math.floor(((progress ?? 0) / 100) * exercisesForCourse.length);
 
     return (
       <div className="mt-2 p-2 border rounded bg-green-100">
@@ -178,20 +180,42 @@ const StudentList: React.FC = () => {
                 Delete
               </button>
               <button
-                onClick={() => setViewProgressID(
-                  viewProgressID === student.docID ? null : student.docID as string
-                )}
+                onClick={() =>
+                  setViewProgressID(viewProgressID === student.docID ? null : student.docID as string)
+                }
                 className="bg-green-600 text-white px-3 py-1 rounded"
               >
                 {viewProgressID === student.docID ? 'Hide Progress' : 'View Progress'}
               </button>
+
+              {/* New button for answering exercises */}
+              <button
+                onClick={() =>
+                  setExerciseStudentID(exerciseStudentID === student.docID ? null : student.docID as string)
+                }
+                className="bg-purple-600 text-white px-3 py-1 rounded"
+              >
+                {exerciseStudentID === student.docID ? 'Close Exercises' : 'Answer Exercises'}
+              </button>
             </div>
 
+            {/* Show progress details */}
             {viewProgressID === student.docID && (
               <ProgressComponent
                 progress={student.progress}
                 courseID={student.courseID}
               />
+            )}
+
+            {/* Show CourseProgress component to answer/view exercises */}
+            {exerciseStudentID === student.docID && (
+              <div className="mt-4">
+                <CourseProgress
+                  courseID={student.courseID}
+                  studentID={student.docID!}
+                  onClose={() => setExerciseStudentID(null)}
+                />
+              </div>
             )}
           </div>
         ))
@@ -222,9 +246,9 @@ const StudentList: React.FC = () => {
                     Delete
                   </button>
                   <button
-                    onClick={() => setViewProgressID(
-                      viewProgressID === student.docID ? null : student.docID as string
-                    )}
+                    onClick={() =>
+                      setViewProgressID(viewProgressID === student.docID ? null : student.docID as string)
+                    }
                     className="bg-green-600 text-white px-3 py-1 rounded"
                   >
                     {viewProgressID === student.docID ? 'Hide Progress' : 'View Progress'}
