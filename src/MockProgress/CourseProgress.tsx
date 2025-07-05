@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase/Firebase';
 import { Exercises, ExerciseAnswers } from '@/Types';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   courseID: number;
   studentID: string;
-  onClose: () => void;
+  onClose: () => void
 }
 
-const CourseProgress: React.FC<Props> = ({ courseID, studentID, onClose }) => {
+const CourseProgress: React.FC<Props> = ({ courseID, studentID }) => {
   const questions = Exercises[courseID] || [];
   const correctAnswers = ExerciseAnswers[courseID] || [];
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadAnswers = async () => {
@@ -34,7 +37,6 @@ const CourseProgress: React.FC<Props> = ({ courseID, studentID, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    // Check correct answers count
     let correctCount = 0;
     questions.forEach((question, idx) => {
       if (
@@ -54,6 +56,10 @@ const CourseProgress: React.FC<Props> = ({ courseID, studentID, onClose }) => {
     });
     setSubmitted(true);
     alert(`Answers submitted! Your score: ${progress}%`);
+  };
+
+  const handleClose = () => {
+    navigate('/'); // 👈 Navigates to Home route
   };
 
   return (
@@ -83,9 +89,7 @@ const CourseProgress: React.FC<Props> = ({ courseID, studentID, onClose }) => {
                 />
               </td>
               <td className="border px-2 py-1 text-green-700 font-semibold">
-                {submitted
-                  ? correctAnswers[idx]
-                  : '—'}
+                {submitted ? correctAnswers[idx] : '—'}
               </td>
             </tr>
           ))}
@@ -109,7 +113,7 @@ const CourseProgress: React.FC<Props> = ({ courseID, studentID, onClose }) => {
 
       <button
         className="mt-2 bg-gray-500 text-white px-3 py-1 rounded"
-        onClick={onClose}
+        onClick={handleClose}
       >
         Close
       </button>

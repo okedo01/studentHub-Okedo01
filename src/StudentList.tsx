@@ -16,7 +16,7 @@ import LogoutButton from './LogoutBtn';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Exercises, type Students } from './Types';
-import CourseProgress from './MockProgress/CourseProgress';  // Import the CourseProgress component you created
+import CourseProgress from './MockProgress/CourseProgress';  
 
 type GroupedStudents = {
   [courseName: string]: Students[];
@@ -28,7 +28,7 @@ const StudentList: React.FC = () => {
   const [students, setStudents] = useState<Students[]>([]);
   const [editID, setEditID] = useState<string | null>(null);
   const [viewProgressID, setViewProgressID] = useState<string | null>(null);
-  const [exerciseStudentID, setExerciseStudentID] = useState<string | null>(null); // New: track student answering exercises
+  const [exerciseStudentID, setExerciseStudentID] = useState<string | null>(null); 
   const [search, setSearch] = useState('');
 
   useEffect(() => {
@@ -187,19 +187,16 @@ const StudentList: React.FC = () => {
               >
                 {viewProgressID === student.docID ? 'Hide Progress' : 'View Progress'}
               </button>
-
-              {/* New button for answering exercises */}
               <button
                 onClick={() =>
-                  setExerciseStudentID(exerciseStudentID === student.docID ? null : student.docID as string)
+                  setExerciseStudentID(student.docID!)
                 }
                 className="bg-purple-600 text-white px-3 py-1 rounded"
               >
-                {exerciseStudentID === student.docID ? 'Close Exercises' : 'Answer Exercises'}
+                Answer Exercises
               </button>
             </div>
 
-            {/* Show progress details */}
             {viewProgressID === student.docID && (
               <ProgressComponent
                 progress={student.progress}
@@ -207,7 +204,6 @@ const StudentList: React.FC = () => {
               />
             )}
 
-            {/* Show CourseProgress component to answer/view exercises */}
             {exerciseStudentID === student.docID && (
               <div className="mt-4">
                 <CourseProgress
