@@ -23,6 +23,7 @@ const AdminDashboard: React.FC = () => {
               <p><strong>Name:</strong> {student.name}</p>
               <p><strong>Email:</strong> {student.email}</p>
               <p><strong>Course:</strong> {student.course}</p>
+              <p><strong>Progress:</strong> {student.progress ?? 0}%</p>
               <button
                 className="mt-2 px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                 onClick={() => student.docID && deleteStudent(student.docID)} 
@@ -33,11 +34,6 @@ const AdminDashboard: React.FC = () => {
             </div>
           ))
         )}
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-semibold text-blue-800 mb-4">📝 Manage Courses</h2>
-        <p className="text-gray-600">Course management features can go here (edit, delete, add...)</p>
       </section>
     </div>
   );

@@ -9,7 +9,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  updateDoc
+  updateDoc,
 } from 'firebase/firestore';
 import EditStudentForm from './EditStudentForm';
 import LogoutButton from './LogoutBtn';
@@ -17,7 +17,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Exercises, type Students } from './Types';
 
-// Grouped by course
 type GroupedStudents = {
   [courseName: string]: Students[];
 };
@@ -116,9 +115,10 @@ const StudentList: React.FC = () => {
   const ProgressComponent = ({ progress, courseID }: { progress?: number; courseID?: number }) => {
     const exercisesForCourse = courseID ? Exercises[courseID] || [] : [];
     const completed = Math.floor((progress ?? 0) / 100 * exercisesForCourse.length);
+
     return (
       <div className="mt-2 p-2 border rounded bg-green-100">
-        <p><strong>Mock Progress:</strong> {progress ?? 0}% complete</p>
+        <p><strong>Progress:</strong> {progress ?? 0}% complete</p>
         <div className="w-full bg-gray-300 rounded-full h-2.5 mt-1">
           <div
             className="bg-green-600 h-2.5 rounded-full"
@@ -162,9 +162,7 @@ const StudentList: React.FC = () => {
             <p><strong>Name:</strong> {student.name}</p>
             <p><strong>Email:</strong> {student.email}</p>
             <p><strong>Course:</strong> {student.course}</p>
-            {student.progress !== undefined && (
-              <p><strong>Progress:</strong> {student.progress}%</p>
-            )}
+            <p><strong>Progress:</strong> {student.progress ?? 0}%</p>
 
             <div className="flex gap-2 mt-2">
               <button
@@ -180,15 +178,20 @@ const StudentList: React.FC = () => {
                 Delete
               </button>
               <button
-                onClick={() => setViewProgressID(student.docID!)}
+                onClick={() => setViewProgressID(
+                  viewProgressID === student.docID ? null : student.docID as string
+                )}
                 className="bg-green-600 text-white px-3 py-1 rounded"
               >
-                View Progress
+                {viewProgressID === student.docID ? 'Hide Progress' : 'View Progress'}
               </button>
             </div>
 
             {viewProgressID === student.docID && (
-              <ProgressComponent progress={student.progress} courseID={student.courseID} />
+              <ProgressComponent
+                progress={student.progress}
+                courseID={student.courseID}
+              />
             )}
           </div>
         ))
@@ -203,9 +206,7 @@ const StudentList: React.FC = () => {
               >
                 <p><strong>Name:</strong> {student.name}</p>
                 <p><strong>Email:</strong> {student.email}</p>
-                {student.progress !== undefined && (
-                  <p><strong>Progress:</strong> {student.progress}%</p>
-                )}
+                <p><strong>Progress:</strong> {student.progress ?? 0}%</p>
 
                 <div className="flex gap-2 mt-2">
                   <button
@@ -221,15 +222,20 @@ const StudentList: React.FC = () => {
                     Delete
                   </button>
                   <button
-                    onClick={() => setViewProgressID(student.docID!)}
+                    onClick={() => setViewProgressID(
+                      viewProgressID === student.docID ? null : student.docID as string
+                    )}
                     className="bg-green-600 text-white px-3 py-1 rounded"
                   >
-                    View Progress
+                    {viewProgressID === student.docID ? 'Hide Progress' : 'View Progress'}
                   </button>
                 </div>
 
                 {viewProgressID === student.docID && (
-                  <ProgressComponent progress={student.progress} courseID={student.courseID} />
+                  <ProgressComponent
+                    progress={student.progress}
+                    courseID={student.courseID}
+                  />
                 )}
               </div>
             ))}
@@ -241,7 +247,7 @@ const StudentList: React.FC = () => {
         <EditStudentForm
           docID={editID}
           closeForm={() => setEditID(null)}
-          onSave={handleStudentUpdate as any} // cast to suppress TS warning
+          onSave={handleStudentUpdate as any}
         />
       )}
     </div>
