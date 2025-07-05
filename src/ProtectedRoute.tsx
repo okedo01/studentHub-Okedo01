@@ -3,7 +3,7 @@ import { useAuth } from './AuthProvider';
 
 type Props = {
   children: React.ReactNode;
-  requiredRole?: 'admin' | 'student';
+  requiredRole?: 'admin' | 'student' | 'any'; // 👈 allow "any"
 };
 
 const ProtectedRoute = ({ children, requiredRole }: Props) => {
@@ -13,8 +13,9 @@ const ProtectedRoute = ({ children, requiredRole }: Props) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (requiredRole && role !== requiredRole) {
-    return <Navigate to="/" replace />; // or show "403 Forbidden" page
+  // Only restrict role if requiredRole is defined and not "any"
+  if (requiredRole && requiredRole !== 'any' && role !== requiredRole) {
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;

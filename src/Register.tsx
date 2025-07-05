@@ -49,43 +49,42 @@ const Register: React.FC = () => {
       course: course?.title || '',
       courseID,
       registeredAt: now,
-      progress: 0
+      progress: 0, // ✅ Add this line
     };
 
     try {
-      // Save to Firestore and get the generated document reference
       const docRef = await addDoc(collection(db, 'registrations'), newStudentData);
 
-      // Student object including Firestore docID and numeric id
       const student: Students = {
-        docID: docRef.id,       
-        id: Date.now(),         
+        docID: docRef.id,
+        id: Date.now(),
         ...newStudentData,
       };
 
-      // Save to local context
       addStudent(student);
 
-      // Show success alert
       Swal.fire({
         title: '🎉 Registration Successful!',
         text: `You are now enrolled in "${course?.title}"`,
         icon: 'success',
-        confirmButtonText: 'Go Back',
+        confirmButtonText: 'Go to Dashboard',
         showCancelButton: true,
-        cancelButtonText: 'Stay Here',
+        cancelButtonText: 'Start Exercises',
       }).then((result) => {
         if (result.isConfirmed) {
           navigate(`/students/${courseID}`);
-        }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // ✅ Redirect to course progress/exercise component
+          navigate(`/progress/${courseID}/${docRef.id}`);
+        } 
       });
-
       reset();
     } catch (error) {
       console.error('Error saving to Firebase:', error);
       Swal.fire('Error', 'Registration failed. Try again.', 'error');
     }
   };
+
 
   return (
     <div className="max-w-xl mx-auto p-6">

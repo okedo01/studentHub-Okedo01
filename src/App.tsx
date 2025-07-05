@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams, useNavigate } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -11,7 +11,7 @@ import HubLayout from './HubLayout';
 import NotFound from './NotFound';
 import SignUp from './SignUp';
 import { useAuth } from './AuthProvider';
-import CourseProgress from './MockProgress/CourseProgress'; // 👈 import it here
+import CourseProgress from './MockProgress/CourseProgress';
 
 const AppRoutes = () => {
   const { role } = useAuth();
@@ -22,7 +22,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
 
-      {/* Admin-Only */}
+      {/* Admin-Only Routes */}
       <Route
         path="/dashboard"
         element={
@@ -39,17 +39,18 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      {/* 👇 Course Progress route */}
+
+      {/* Shared Route (admin or student) for Course Progress */}
       <Route
         path="/progress/:courseID/:studentID"
         element={
-          <ProtectedRoute requiredRole="admin">
+          <ProtectedRoute requiredRole="any">
             <CourseProgressWrapper />
           </ProtectedRoute>
         }
       />
 
-      {/* Student-Only Pages inside HubLayout */}
+      {/* Student Routes */}
       <Route
         path="/"
         element={
@@ -80,8 +81,7 @@ const AppRoutes = () => {
   );
 };
 
-// Optional wrapper to extract params
-import { useParams, useNavigate } from 'react-router-dom';
+// Wrapper for CourseProgress that reads params
 const CourseProgressWrapper = () => {
   const { courseID, studentID } = useParams();
   const navigate = useNavigate();
