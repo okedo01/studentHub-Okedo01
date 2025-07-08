@@ -36,7 +36,7 @@ const EditStudentForm: React.FC<EditStudentFormProps> = ({ docID, closeForm, onS
     }).then(async (result) => {
       if (result.isConfirmed) {
         const updatedStudent = { ...data, docID };
-        await onSave(updatedStudent); // ✅ update in Firestore
+        await onSave(updatedStudent); // update in Firestore
         closeForm();
         Swal.fire('Updated!', 'Student details have been updated.', 'success');
       }

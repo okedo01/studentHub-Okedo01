@@ -49,7 +49,7 @@ const Register: React.FC = () => {
       course: course?.title || '',
       courseID,
       registeredAt: now,
-      progress: 0, // ✅ Add this line
+      progress: 0, // Add this line
     };
 
     try {
@@ -74,7 +74,7 @@ const Register: React.FC = () => {
         if (result.isConfirmed) {
           navigate(`/students/${courseID}`);
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // ✅ Redirect to course progress/exercise component
+          // Redirect to course progress/exercise component
           navigate(`/progress/${courseID}/${docRef.id}`);
         } 
       });
