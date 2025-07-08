@@ -94,22 +94,22 @@ const CourseProgress: React.FC<Props> = ({ courseID, studentID, onClose }) => {
       </table>
 
       {!submitted && (
-        <button
+        <button style={{color: "white"}}
           onClick={handleSubmit}
-          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="mt-4 bg-gray-900 p-2 mr-4 rounded transition cursor-pointer"
         >
           Submit Answers
         </button>
       )}
 
       {submitted && (
-        <p className="mt-4 font-semibold text-green-700">
+        <p className="mt-4 font-semibold text-gray-700">
           Your progress: {score}%
         </p>
       )}
 
-      <button
-        className="mt-2 bg-gray-500 text-white px-3 py-1 rounded"
+      <button style={{color: "white"}}
+        className="mt-2 bg-gray-900 py-2 px-4 rounded cursor-pointer"
         onClick={handleClose}
       >
         Close
