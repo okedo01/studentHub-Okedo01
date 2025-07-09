@@ -42,7 +42,7 @@ export const useAuth = () => {
 const provider = new GoogleAuthProvider();
 
 // Add your admin emails here
-const adminEmails = ["eliahmwelangi01@gmail.com"];
+const adminEmails = ["eliahmwelangi01@gmail.com, marvelokedo01@gmail.com"];
 
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<FirebaseUser | null>(null);
